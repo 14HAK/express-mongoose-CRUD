@@ -3,9 +3,8 @@
   "version": "1.0.0",
   "description": "simple design module pattern example demo project",
   "main": "./src/server.js",
-  "type": "module",
   "scripts": {
-    "start": "tsc && node dist/server.js",
+    "start": "node dist/server.js",
     "dev": "nodemon",
     "build": "tsc",
     "lint": "eslint . --ext .ts",

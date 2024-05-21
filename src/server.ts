@@ -1,13 +1,16 @@
-import express from 'express';
-import cors from 'cors';
-const app = express();
+import mongoose from 'mongoose';
+import envConfig from './config';
+import app from './app';
 
-app.use(cors());
-app.use(express.json());
+async function main() {
+  try {
+    await mongoose.connect(envConfig.mondo_uri as string);
 
-const port = 3000;
-
-app.get('/', (req, res) => res.send('Hello World!'));
-app.listen(port, () =>
-  console.log(`Example app listening on port: http://localhost:${port}`)
-);
+    app.listen(envConfig?.port, () =>
+      console.log(`server running at port: http://localhost:${envConfig?.port}`)
+    );
+  } catch (error) {
+    console.log(error);
+  }
+}
+main();
