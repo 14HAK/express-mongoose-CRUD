@@ -35,7 +35,9 @@
 ### Client Variant Request Handle:
 - request: /api/products method:(POST).
 - request: /api/products/:productId(GET).
-- request: http://localhost:8001/api/products/?name=iPhone 13&price=800(GET)
+- request: /api/products/?name=iPhone 13&price=800(GET)
+- request: /api/products/:productId(PUT)
+- request: /api/products/:productId(DELETE)
 
 
 <!-- **bold text** -->

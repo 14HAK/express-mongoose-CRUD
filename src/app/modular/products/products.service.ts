@@ -1,6 +1,7 @@
-import { AnyObject, Types } from 'mongoose';
+import { AnyObject } from 'mongoose';
 import TPRODUCT from './products.interface';
 import ProductModel from './products.model';
+import { OBJECTID } from '../../utils/module.global.interface';
 
 export const serviceProductCreate = async (ReqProduct: TPRODUCT): Promise<AnyObject> => {
   const result = await ProductModel.create(ReqProduct);
@@ -13,19 +14,21 @@ export const serviceProductGet = async (query: AnyObject): Promise<AnyObject> =>
   return result;
 };
 
-export const makeSearchQuery = async (
-  paramsID: undefined | string,
-  query: AnyObject
-): Promise<AnyObject> => {
-  let searchQuery: AnyObject = {};
-
-  if (!paramsID && query.length < 1) {
-    searchQuery = {};
-  } else if (!paramsID || query.length >= 1) {
-    searchQuery = { ...query };
-  } else if (paramsID || query.length >= 1) {
-    searchQuery = { _id: new Types.ObjectId(paramsID), ...query };
+export const serviceProductUpdate = async (
+  filter: OBJECTID,
+  update: AnyObject
+): Promise<AnyObject | undefined> => {
+  const result = await ProductModel.findByIdAndUpdate(filter, update, { new: true });
+  if (result) {
+    return result;
   }
+};
 
-  return searchQuery;
+export const serviceProductDelete = async (
+  conditions: OBJECTID
+): Promise<AnyObject | undefined> => {
+  const result = await ProductModel.findOneAndDelete(conditions);
+  if (result) {
+    return result;
+  }
 };
