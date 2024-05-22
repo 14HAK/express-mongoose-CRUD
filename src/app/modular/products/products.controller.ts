@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { serviceProductCreate, servicesProductGet } from './products.service';
+import { serviceProductCreate, serviceProductGet } from './products.service';
 
 export const createProduct = async (req: Request, res: Response): Promise<void> => {
   const result = await serviceProductCreate();
@@ -8,7 +8,7 @@ export const createProduct = async (req: Request, res: Response): Promise<void> 
 };
 
 export const getProduct = async (req: Request, res: Response): Promise<void> => {
-  const result = await servicesProductGet();
+  const result = await serviceProductGet();
   console.log(result);
   console.log('product get request');
 };

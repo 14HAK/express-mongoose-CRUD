@@ -1,6 +1,7 @@
 import express, { Application, NextFunction, Request, Response } from 'express';
 import cors from 'cors';
 import productRouter from './app/modular/products/products.routes';
+import orderRouter from './app/modular/orders/orders.routes';
 
 const app: Application = express();
 
@@ -20,5 +21,6 @@ app.get('/', (req: Request, res: Response) => {
 
 // all route handler
 app.use(productRouter);
+app.use(orderRouter);
 
 export default app;
