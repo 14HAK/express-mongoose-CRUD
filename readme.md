@@ -15,7 +15,7 @@
 - Set up a MongoDB database using Mongoose for storing product and order data.
 
 ### step-2:
-#### create the sketch of routes && routers:
+#### Create the sketch of routes && routers:
 
 - /api/products (POST)
 - /api/products (GET)
@@ -28,7 +28,12 @@
 - /api/orders?email=level2@programming-hero.com (GET)
 
 ### step-3:
-### define data model with mongoose and typescript:
+### Define data model with mongoose and typescript:
+- create products Interface in typescript, mongoose Schema and mongoose model.
+
+### step-4:
+### Client Variant Request Handle:
+- request: /api/products method:(POST).
 
 
 <!-- **bold text** -->
