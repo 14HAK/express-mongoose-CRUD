@@ -2,11 +2,10 @@
  - PORT = "8080"
  - MONGODB_URI = "mongodb+srv://[userName]:[password]@cluster0.kcr8r.mongodb.net/[collectionName]?retryWrites=true&w=majority&appName=Cluster0"
 
-# Third Party Packages(NPM):
- [express]
-
 # Project Instillation Process:
-- demo instructor
+- npm install                  // to install all NPM related this project.
+- npm run dev                 //start project direct server.ts.
+- npm run build && npm start // start project server.js.
 
 # Project Working Instruction:
 
@@ -42,6 +41,8 @@
 - request: /api/orders (POST)
 - request: /api/orders (GET)
 - request: /api/orders?email=dulon@gmail.com (GET)
+
+- bunas-part: check if order id existing item to a products verity.
 
 
 <!-- **bold text** -->
