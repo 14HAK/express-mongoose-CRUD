@@ -9,6 +9,7 @@ import {
 import { AnyObject, Types } from 'mongoose';
 import { makeSearchQuery } from '../../utils/querySearch';
 import { ZodProductSchema } from './products.interface';
+import { ZodError } from 'zod';
 
 export const createProduct = async (req: Request, res: Response): Promise<void> => {
   const ReqProduct = await req?.body;
@@ -74,6 +75,7 @@ export const updateProduct = async (req: Request, res: Response): Promise<void> 
   try {
     const validZodData = await ZodProductSchema.parse(updatedData);
     const result = await serviceProductUpdate(filterID, validZodData);
+
     if (result) {
       res.status(201).json({
         success: true,
@@ -89,7 +91,7 @@ export const updateProduct = async (req: Request, res: Response): Promise<void> 
   } catch (err) {
     res.status(204).json({
       success: false,
-      Error: err
+      Error: err instanceof ZodError ? err.errors : 'Invalid request data.'
     });
   }
 };

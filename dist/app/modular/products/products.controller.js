@@ -14,6 +14,7 @@ const products_service_1 = require("./products.service");
 const mongoose_1 = require("mongoose");
 const querySearch_1 = require("../../utils/querySearch");
 const products_interface_1 = require("./products.interface");
+const zod_1 = require("zod");
 const createProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const ReqProduct = yield (req === null || req === void 0 ? void 0 : req.body);
     try {
@@ -98,7 +99,7 @@ const updateProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     catch (err) {
         res.status(204).json({
             success: false,
-            Error: err
+            Error: err instanceof zod_1.ZodError ? err.errors : 'Invalid request data.'
         });
     }
 });
