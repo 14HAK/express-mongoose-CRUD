@@ -25,7 +25,7 @@
 
 - /api/orders (POST)
 - /api/orders (GET)
-- /api/orders?email=level2@programming-hero.com (GET)
+- /api/orders?email=dulon@.com (GET)
 
 ### step-3:
 ### Define data model with mongoose and typescript:
@@ -38,6 +38,10 @@
 - request: /api/products/?name=iPhone 13&price=800(GET)
 - request: /api/products/:productId(PUT)
 - request: /api/products/:productId(DELETE)
+
+- request: /api/orders (POST)
+- request: /api/orders (GET)
+- request: /api/orders?email=dulon@gmail.com (GET)
 
 
 <!-- **bold text** -->
