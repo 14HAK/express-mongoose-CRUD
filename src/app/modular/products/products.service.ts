@@ -24,6 +24,7 @@ export const serviceProductUpdate = async (
     update,
     { new: true }
   );
+  console.log(result);
   if (result) {
     return result;
   }

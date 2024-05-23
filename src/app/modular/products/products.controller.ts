@@ -8,16 +8,23 @@ import {
 } from './products.service';
 import { AnyObject, Types } from 'mongoose';
 import { makeSearchQuery } from '../../utils/querySearch';
+import { ZodProductSchema } from './products.interface';
 
 export const createProduct = async (req: Request, res: Response): Promise<void> => {
+  const ReqProduct = await req?.body;
   try {
-    const ReqProduct = await req?.body;
-    const result: AnyObject = await serviceProductCreate(ReqProduct);
+    const validZodData = await ZodProductSchema.parse(ReqProduct);
+    const result: AnyObject = await serviceProductCreate(validZodData);
     if (result) {
       res.status(201).json({
         success: true,
         message: 'Product created successfully!',
         data: result
+      });
+    } else {
+      res.status(500).json({
+        success: false,
+        error: 'Failed to create product.'
       });
     }
   } catch (err) {
@@ -43,6 +50,12 @@ export const getProduct = async (req: Request, res: Response): Promise<void> => 
         message: 'Products fetched successfully!',
         data: result
       });
+    } else {
+      res.status(201).json({
+        success: false,
+        message: 'fail to product fetch!',
+        data: []
+      });
     }
   } catch (err) {
     res.status(500).json({
@@ -59,12 +72,20 @@ export const updateProduct = async (req: Request, res: Response): Promise<void> 
   const updatedData: AnyObject = await req?.body;
 
   try {
-    const result = await serviceProductUpdate(filterID, updatedData);
-    res.status(201).json({
-      success: true,
-      message: 'Product updated successfully!',
-      data: result
-    });
+    const validZodData = await ZodProductSchema.parse(updatedData);
+    const result = await serviceProductUpdate(filterID, validZodData);
+    if (result) {
+      res.status(201).json({
+        success: true,
+        message: 'Product updated successfully!',
+        data: result
+      });
+    } else {
+      res.status(500).json({
+        success: false,
+        error: 'Failed to update product.'
+      });
+    }
   } catch (err) {
     res.status(204).json({
       success: false,
@@ -81,12 +102,13 @@ export const deleteProduct = async (req: Request, res: Response): Promise<void> 
 
     if (!deletedItem) {
       res.status(404).json({ success: false, message: 'Item not found' });
+    } else {
+      res.status(200).json({
+        success: true,
+        message: 'Product deleted successfully!',
+        data: null
+      });
     }
-    res.status(200).json({
-      success: true,
-      message: 'Product deleted successfully!',
-      data: null
-    });
   } catch (error) {
     res.status(500).json({ success: false, message: 'Internal Server Error' });
   }
