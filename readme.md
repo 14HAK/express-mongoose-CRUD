@@ -1,5 +1,5 @@
 # FileName: [.env]:
- - PORT = "8000"
+ - PORT = "8080"
  - MONGODB_URI = "mongodb+srv://[userName]:[password]@cluster0.kcr8r.mongodb.net/[collectionName]?retryWrites=true&w=majority&appName=Cluster0"
 
 # Third Party Packages(NPM):

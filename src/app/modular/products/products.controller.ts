@@ -1,3 +1,4 @@
+import { OBJECTID } from '../../utils/module.global.interface';
 import { Request, Response } from 'express';
 import {
   serviceProductCreate,
@@ -7,12 +8,11 @@ import {
 } from './products.service';
 import { AnyObject, Types } from 'mongoose';
 import { makeSearchQuery } from '../../utils/querySearch';
-import { OBJECTID } from '../../utils/module.global.interface';
 
 export const createProduct = async (req: Request, res: Response): Promise<void> => {
   try {
     const ReqProduct = await req?.body;
-    const result = await serviceProductCreate(ReqProduct);
+    const result: AnyObject = await serviceProductCreate(ReqProduct);
     if (result) {
       res.status(201).json({
         success: true,
@@ -29,13 +29,14 @@ export const createProduct = async (req: Request, res: Response): Promise<void> 
 };
 
 export const getProduct = async (req: Request, res: Response): Promise<void> => {
-  const paramsID: undefined | string = req?.params?.id;
+  const paramsID: string = req?.params?.id;
   const query: AnyObject = req?.query;
+  console.log(typeof query);
 
-  const searchQuery = await makeSearchQuery(paramsID, query);
+  const searchQuery: AnyObject = await makeSearchQuery(paramsID, query);
   // console.log(searchQuery);
   try {
-    const result = await serviceProductGet(searchQuery);
+    const result: AnyObject = await serviceProductGet(searchQuery);
     if (result) {
       res.status(201).json({
         success: true,
@@ -59,13 +60,11 @@ export const updateProduct = async (req: Request, res: Response): Promise<void> 
 
   try {
     const result = await serviceProductUpdate(filterID, updatedData);
-    if (result) {
-      res.status(201).json({
-        success: true,
-        message: 'Product updated successfully!',
-        data: result
-      });
-    }
+    res.status(201).json({
+      success: true,
+      message: 'Product updated successfully!',
+      data: result
+    });
   } catch (err) {
     res.status(204).json({
       success: false,
@@ -77,21 +76,18 @@ export const updateProduct = async (req: Request, res: Response): Promise<void> 
 export const deleteProduct = async (req: Request, res: Response): Promise<void> => {
   const params: string = req?.params?.id;
 
-  const filterID: OBJECTID = { _id: new Types.ObjectId(params) };
-
   try {
-    const result = await serviceProductDelete(filterID);
-    if (result) {
-      res.status(204).json({
-        success: true,
-        message: 'Product deleted successfully!',
-        data: result
-      });
+    const deletedItem = await serviceProductDelete(params);
+
+    if (!deletedItem) {
+      res.status(404).json({ success: false, message: 'Item not found' });
     }
-  } catch (err) {
-    res.status(204).json({
-      success: false,
-      Error: err
+    res.status(200).json({
+      success: true,
+      message: 'Product deleted successfully!',
+      data: null
     });
+  } catch (error) {
+    res.status(500).json({ success: false, message: 'Internal Server Error' });
   }
 };
